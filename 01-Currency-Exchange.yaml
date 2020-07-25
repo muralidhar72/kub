@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: currency-exchange
+  labels:
+    app: currency-exchange
+spec:
+  ports:
+    - port: 8000
+      name: http
+  selector:
+    app: currency-exchange
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currency-exchange
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: currency-exchange
+  template:
+    metadata:
+      labels:
+        app: currency-exchange
+    spec:
+      containers:
+        - name: currency-exchange
+          image: pmr2791/currency-exchange:0.0.1-MiniKube
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 8000

@@ -1,0 +1,36 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: helloworld-virtual-services
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - http-murali-rest-gateway                      # 1
+  http:
+    - match:
+        - uri:
+            prefix: /currency-conversion
+      route:
+        - destination:
+            host: currency-conversion
+            subset: v1MiniKube
+          weight: 50
+        - destination:
+            host: currency-conversion
+            subset: v2MiniKube
+          weight: 50
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: currency-conversion-destination-rules
+spec:
+  host: currency-conversion
+  subsets:
+    - name: v1MiniKube
+      labels:
+        version: v1MiniKube
+    - name: v2MiniKube
+      labels:
+        version: v2MiniKube
