@@ -1,0 +1,53 @@
+To Start (For Users Work)
+====
+
+minikube start --vm-driver hyperv --hyperv-virtual-switch "Default Switch"
+minikube stop
+
+minikube config view
+minikube config set memory 8192
+minikube config set cpus 2
+
+Dash Board (https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+===============
+kubectl proxy
+
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/pod?namespace=default
+
+Get Token:
+kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | awk '/^deployment-controller-token-/{print $1}') | awk '$1=="token:"{print $2}'
+
+To enable istio type MUST
+==========================
+ >kubectl describe ns default
+ (Shoiuld have Labels:       istio-injection=enabled after following commnad)
+ >kubectl label namespace default istio-injection=enabled  (MUST)
+ Get YAML: >kubectl get ns default -o yaml
+ >Deploy application  kubectl get po
+   photo-service-675555c867-vnddt        2/2     Running   4          15h (2/2 - 2 containes inside a pod)
+
+>kubectl logs hello-world-rest-api-6857cdb877-tqnh7
+error: a container name must be specified for pod hello-world-rest-api-6857cdb877-tqnh7, choose one of: [hello-world-rest-api istio-proxy] or one of the init containers: [istio-init]
+kubectl logs hello-world-rest-api-6857cdb877-tqnh7 hello-world-rest-api
+
+http://192.168.210.213:31380/hello-world
+
+Istio Commands
+====================
+
+
+minikube ip
+kubectl get pods --all-namespaces
+kubectl get service -n istio-system
+
+kubectl get po -n istio-system
+
+kubectl describe pod <> -n istio_system
+kubectl get virtualservices/vs -o yaml
+kubectl get dr (Destination Rules)
+
+kubectl get po -n istio-system --show-labels
+
+Watch Commands
+====
+ while true; do curl http://192.168.210.214:31380/hello-world; sleep 1; done 
