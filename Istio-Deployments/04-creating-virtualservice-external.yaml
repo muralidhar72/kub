@@ -15,23 +15,23 @@ spec:
         - destination:
             host: currency-conversion
             subset: v1MiniKube
-          weight: 0
+          weight: 100
         - destination:
             host: currency-conversion
             subset: v2MiniKube
-          weight: 100
+          weight: 0
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: currency-conversion-destination-rules
 spec:
-  host: currency-conversion
+  host: currency-conversion  # Service
   namespace: default
   subsets:
     - name: v1MiniKube
       labels:
-        version: v1MiniKube
+        version: v1MiniKube ## Find Pods with label v1MiniKube
     - name: v2MiniKube
       labels:
-        version: v2MiniKube
+        version: v2MiniKube ## Find Pods with label v2MiniKube
