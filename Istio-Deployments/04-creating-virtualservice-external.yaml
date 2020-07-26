@@ -15,11 +15,11 @@ spec:
         - destination:
             host: currency-conversion
             subset: v1MiniKube
-          weight: 50
+          weight: 0
         - destination:
             host: currency-conversion
             subset: v2MiniKube
-          weight: 50
+          weight: 100
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
@@ -27,6 +27,7 @@ metadata:
   name: currency-conversion-destination-rules
 spec:
   host: currency-conversion
+  namespace: default
   subsets:
     - name: v1MiniKube
       labels:
