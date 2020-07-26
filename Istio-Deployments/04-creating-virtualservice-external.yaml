@@ -26,7 +26,7 @@ kind: DestinationRule
 metadata:
   name: currency-conversion-destination-rules
 spec:
-  host: currency-conversion  # Service
+  host: currency-conversion # Service
   namespace: default
   subsets:
     - name: v1MiniKube
