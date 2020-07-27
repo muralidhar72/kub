@@ -11,7 +11,7 @@ spec:
     - match:
       - headers:  # IF
           x-murali-header:
-            exact: muralicanary50Vs50               #If Header name <x-murali-header> exists in the request and is equalto muralicanary50Vs50, it goes thru this route
+            exact: muralicanary50Vs50               #If Header name <x-murali-header> exists in the request and is equalto muralicanary50Vs50, it goes thru this route <HEADER x-murali-header = muralicanary50Vs50 NEEDED>
       route:
         - destination:
             host: currency-conversion
@@ -24,7 +24,7 @@ spec:
     - match:          
       - headers:  # IF
           x-murali-header:
-            exact: muralicanary100V1               #If Header name <x-murali-header> exists in the request and is equalto muralicanary100V1, it goes thru this route
+            exact: muralicanary100V1               #If Header name <x-murali-header> exists in the request and is equalto muralicanary100V1, it goes thru this route <HEADER x-murali-header = muralicanary100V1 NEEDED>
       route:
         - destination:
             host: currency-conversion
@@ -33,7 +33,7 @@ spec:
     - match:          
       - headers:  # IF
           x-murali-header:
-            exact: muralicanary100V2               #If Header name <x-murali-header> exists in the request and is equalto muralicanary100V2, it goes thru this route
+            exact: muralicanary100V2               #If Header name <x-murali-header> exists in the request and is equalto muralicanary100V2, it goes thru this route <HEADER x-murali-header = muralicanary100V2 NEEDED>
       route:
         - destination:
             host: currency-conversion
@@ -41,7 +41,7 @@ spec:
           weight: 100
     - match:          
       - uri:
-          prefix: /currency-conversion
+          prefix: /currency-conversion  # {{INGRESS_URL}}/currency-conversion/from/EUR/to/INR/quantity/10 without header defined works  <HEADER NOT NEEDED>
       route:
         - destination:
             host: currency-conversion
