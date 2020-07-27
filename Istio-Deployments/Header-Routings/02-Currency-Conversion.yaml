@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: currency-conversion
+  labels:
+    app: currency-conversion
+spec:
+  ports:
+    - port: 8100
+      name: http
+  selector:
+    app: currency-conversion
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currency-conversion-v1minikube
+  labels:
+    version: v1MiniKube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: currency-conversion
+      version: v1MiniKube
+  template:
+    metadata:
+      labels:
+        app: currency-conversion
+        version: v1MiniKube
+    spec:
+      containers:
+        - name: currency-conversion
+          image: pmr2791/currency-conversion:0.0.1-MiniKube
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 8100
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currency-conversion-v2minikube
+  labels:
+    version: v2MiniKube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: currency-conversion
+      version: v2MiniKube
+  template:
+    metadata:
+      labels:
+        app: currency-conversion
+        version: v2MiniKube
+    spec:
+      containers:
+        - name: currency-conversion
+          image: pmr2791/currency-conversion:0.0.2-MiniKube
+          imagePullPolicy: IfNotPresent #Always
+          ports:
+            - containerPort: 8100            
