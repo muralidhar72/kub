@@ -48,6 +48,9 @@ kubectl get dr (Destination Rules)
 
 kubectl get po -n istio-system --show-labels
 
+Scale down and scale up:
+kubectl scale deploy sticky-svc --replicas=0
+kubectl scale deploy sticky-svc --replicas=5
 Watch Commands
 ====
  while true; do curl http://192.168.210.214:31380/hello-world; sleep 1; done 

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sticky-svc
+  labels:
+    app: sticky-svc
+    version: v1
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: sticky-svc
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: sticky-svc
+        version: v1
+    spec:
+      containers:
+        - image: learnistio/sticky-svc:1.0.0
+          imagePullPolicy: Always
+          name: svc
+          ports:
+            - containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: sticky-svc
+  labels:
+    app: sticky-svc
+spec:
+  selector:
+    app: sticky-svc
+  ports:
+    - port: 8080
+      name: http
