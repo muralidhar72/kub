@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name}}
+  labels:
+    app: {{ .Values.name}}
+spec:
+  replicas: {{ .Values.replicas}}
+  selector:
+    matchLabels:
+      app: {{ .Values.name}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appparams.applicationname}} #Refer applicationname under appparams
+    spec:
+      containers:
+      - name: {{ .Values.name}}
+        image: {{ .Values.image}}
+
+        env:
+          - {{- if .Values.service.enabled }} # Check  service.enabed is true
+        - name: CURRENCY_EXCHANGE_URI
+          value: http://currency-exchange:8000
+          {{- end}}
+        ports:
+        - containerPort: {{ .Values.port}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.name}}
+  labels:
+    app: {{ .Values.name}}
+spec:
+  type: {{ .Values.servicetype}}
+  ports:
+  - port: {{ .Values.port}}
+    protocol: TCP
+  selector:
+    app: {{ .Values.name}}

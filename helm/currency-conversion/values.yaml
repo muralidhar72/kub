@@ -1,0 +1,10 @@
+service:
+  enabled: true
+image: in28min/currency-conversion:0.0.1-RELEASE
+port: 8100
+servicetype: LoadBalancer
+replicas: 2
+name: currency-conversion
+exchangeUrl: http://currency-exchange:8000
+appparams:
+  applicationname: currency-conversion
